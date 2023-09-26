@@ -1,0 +1,58 @@
+#lang racket
+
+(provide (all-defined-out))
+
+(require "TDAOption_20677670_SaavedraOlmos.rkt")
+
+; Nombre: flow.
+; Dominio: id (int) X name (string) X Options* (list).
+; Recorrido: flow (list).
+; Descripción: Corresponde a la función constructora del TDA Flujo. En su entrada tiene
+; un id, nombre y opciones (son 0 o más opciones). Su salida es un flujo representado por una lista con
+; la información mencionada. Cabe destacar que las opciones no se repiten debido al id de estas.
+
+(define flow
+  (lambda (id name . Options)
+    (cons id (list name Options))))
+
+; Nombre: id-flow.
+; Dominio: flow.
+; Recorrido: id (int).
+; Descripción: Corresponde a una función selectora del TDA Flujo. En su entrada recibe
+; un flujo. Su salida corresponde al id del flujo entrante.
+
+(define id-flow
+  (lambda (flow)
+    (car flow)))
+
+; Nombre: name-flow.
+; Dominio: flow.
+; Recorrido: name (string).
+; Descripción: Corresponde a una función selectora del TDA Flujo. En su entrada recibe
+; un flujo. Su salida corresponde al nombre del flujo entrante.
+
+(define name-flow
+  (lambda (flow)
+    (cadr flow)))
+
+; Nombre: options-flow.
+; Dominio: flow.
+; Recorrido: Options (list).
+; Descripción: Corresponde a una función selectora del TDA Flujo. En su entrada recibe
+; un flujo. Su salida corresponde a la lista de opciones del flujo entrante.
+
+(define options-flow
+  (lambda (flow)
+    (caddr flow)))
+
+; Nombre: flow-add-option.
+; Dominio: flow X option.
+; Recorrido: flow.
+; Descripción: Corresponde a una función modificadora del TDA Flujo. En su entrada recibe
+; un flujo y una opción. Su salida corresponde a un flujo con la misma cantidad de opciones o
+; una opción más (si no se repiten). Cabe destacar que las opciones añadidas no se pueden repetir
+; con respecto a su id.
+
+(define flow-add-option
+  (lambda (flow option)
+    (cons flow (list option))))
