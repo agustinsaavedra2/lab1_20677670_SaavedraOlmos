@@ -45,10 +45,6 @@
   (lambda (flow)
     (caddr flow)))
 
-(define add-option
-  (lambda (flow option)
-    (cons option (options-flow flow))))
-
 ; Nombre: flow-add-option.
 ; Dominio: flow X option.
 ; Recorrido: flow.
@@ -59,19 +55,4 @@
 
 (define flow-add-option
   (lambda (flow option)
-    (cons (id-flow flow) (cons (name-flow flow)
-          (list (eliminar-duplicados1 (eliminar-concurrencias1 (add-option flow option))))))))
-
-(define eliminar-duplicados2
-  (lambda (flows)
-    (if (null? flows)
-      '()
-      (cons (id-flow flows)
-            (eliminar-duplicados1
-             (filter (lambda (element)
-                       (not (equal? element (id-flow flows))))
-                     (cdr flows)))))))
-
-(define eliminar-concurrencias2
-  (lambda (flows)
-    (map eliminar-duplicados1 flows)))
+    (cons flow (list option))))

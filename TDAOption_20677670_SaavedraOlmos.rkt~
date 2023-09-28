@@ -33,17 +33,3 @@
 (define keywords-option
   (lambda (option)
     (cadddr (cdr option))))
-
-(define eliminar-duplicados1
-  (lambda (options)
-    (if (null? options)
-      '()
-      (cons (code-option options)
-            (eliminar-duplicados1
-             (filter (lambda (element)
-                       (not (equal? element (code-option options))))
-                     (cdr options)))))))
-
-(define eliminar-concurrencias1
-  (lambda (options)
-    (map eliminar-duplicados1 options)))
