@@ -13,7 +13,7 @@
 
 (define flow
   (lambda (id name . Options)
-    (cons id (list name Options))))
+    (cons id (list name (delete-options (delete-repeat-options Options))))))
 
 ; Nombre: id-flow.
 ; Dominio: flow.
@@ -60,18 +60,18 @@
 (define flow-add-option
   (lambda (flow option)
     (cons (id-flow flow) (cons (name-flow flow)
-          (list (eliminar-duplicados1 (eliminar-concurrencias1 (add-option flow option))))))))
+          (list (delete-flows (delete-repeat-flows (add-option (options-flow flow) option))))))))
 
-(define eliminar-duplicados2
+(define repeat-id-flow
+  (lambda (flows)
+    (filter (lambda (element) (not (equal? element (id-flow flows)))) (cdr flows))))
+
+(define delete-flows
   (lambda (flows)
     (if (null? flows)
       '()
-      (cons (id-flow flows)
-            (eliminar-duplicados1
-             (filter (lambda (element)
-                       (not (equal? element (id-flow flows))))
-                     (cdr flows)))))))
+      (cons (id-flow flows) (delete-flows (repeat-id-flow flows))))))
 
-(define eliminar-concurrencias2
+(define delete-repeat-flows
   (lambda (flows)
-    (map eliminar-duplicados1 flows)))
+    (map delete-flows flows)))

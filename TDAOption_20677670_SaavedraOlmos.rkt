@@ -20,6 +20,10 @@
 ; Descripción: Corresponde a una función selectora del TDA Opción. Su entrada es una opción
 ; y retorna su código correspondiente.
 
+(define add-option
+  (lambda (options option)
+    (cons option options)))
+
 (define code-option
   (lambda (option)
     (car option)))
@@ -34,16 +38,16 @@
   (lambda (option)
     (cadddr (cdr option))))
 
-(define eliminar-duplicados1
+(define repeat-code
+  (lambda (options)
+    (filter (lambda (element) (not (equal? element (code-option options)))) (cdr options))))
+
+(define delete-options
   (lambda (options)
     (if (null? options)
       '()
-      (cons (code-option options)
-            (eliminar-duplicados1
-             (filter (lambda (element)
-                       (not (equal? element (code-option options))))
-                     (cdr options)))))))
+      (cons (code-option options) (delete-options (repeat-code options))))))
 
-(define eliminar-concurrencias1
+(define delete-repeat-options
   (lambda (options)
-    (map eliminar-duplicados1 options)))
+    (map delete-options options)))
