@@ -16,3 +16,53 @@
   (lambda (chatbotID name welcomeMessage startFlowID . flows)
     (cons chatbotID (list name welcomeMessage startFlowID
                           (delete-flows (delete-repeat-flows flows))))))
+
+; Nombre: id-chatbot
+; Dominio: chatbot.
+; Recorrido: chatbotID.
+; Descripción: Corresponde a una función selectora de TDA Chatbot. Su entrada recibe
+; un chatbot. Su salida es el ID del chatbot entrante.
+
+(define id-chatbot
+  (lambda (chatbot)
+    (car chatbot)))
+
+; Nombre: name-chatbot
+; Dominio: chatbot.
+; Recorrido: name.
+; Descripción: Corresponde a una función selectora de TDA Chatbot. Su entrada recibe
+; un chatbot. Su salida es el nombre del chatbot entrante.
+
+(define name-chatbot
+  (lambda (chatbot)
+    (cadr chatbot)))
+
+; Nombre: welcomeMessage-chatbot
+; Dominio: chatbot.
+; Recorrido: welcomeMessage.
+; Descripción: Corresponde a una función selectora de TDA Chatbot. Su entrada recibe
+; un chatbot. Su salida es el mensaje de bienvenida del chatbot entrante.
+
+(define welcomeMessage-chatbot
+  (lambda (chatbot)
+    (caddr chatbot)))
+
+; Nombre: startFlowID-chatbot
+; Dominio: chatbot.
+; Recorrido: startFlowID.
+; Descripción: Corresponde a una función selectora de TDA Chatbot. Su entrada recibe
+; un chatbot. Su salida es el ID del flujo inicial del chatbot entrante.
+
+(define startFlowID-chatbot
+  (lambda (chatbot)
+    (cadddr chatbot)))
+
+; Nombre: flows-chatbot
+; Dominio: chatbot.
+; Recorrido: flows.
+; Descripción: Corresponde a una función selectora de TDA Chatbot. Su entrada recibe
+; un chatbot. La salida son los flujos contenidos en el chatbot entrante.
+
+(define flows-chatbot
+  (lambda (chatbot)
+    (cadddr (cdr chatbot))))
