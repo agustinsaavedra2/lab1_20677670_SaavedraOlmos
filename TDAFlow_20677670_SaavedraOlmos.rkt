@@ -45,9 +45,6 @@
   (lambda (flow)
     (caddr flow)))
 
-(define add-option
-  (lambda (flow option)
-    (cons option (options-flow flow))))
 
 ; Nombre: flow-add-option.
 ; Dominio: flow X option.

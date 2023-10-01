@@ -66,3 +66,12 @@
 (define flows-chatbot
   (lambda (chatbot)
     (cadddr (cdr chatbot))))
+
+(define chatbot-add-flow
+  (lambda (chatbot flow)
+    (cond
+      [(null? flow) (cons chatbot null)]
+      [(member (id-flow flow) (map id-flow (flows-chatbot chatbot)))
+       (chatbot-add-flow (cdr (flows-chatbot chatbot)) flow)]
+      [else (cons (id-chatbot chatbot) (cons (name-chatbot chatbot) (cons (welcomeMessage-chatbot chatbot)
+            (cons (startFlowID-chatbot chatbot) (cons (flows-chatbot chatbot) flow)))))])))
