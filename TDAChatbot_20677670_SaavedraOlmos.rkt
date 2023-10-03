@@ -75,3 +75,17 @@
        (chatbot-add-flow (cdr (flows-chatbot chatbot)) flow)]
       [else (cons (id-chatbot chatbot) (cons (name-chatbot chatbot) (cons (welcomeMessage-chatbot chatbot)
             (cons (startFlowID-chatbot chatbot) (cons (flows-chatbot chatbot) flow)))))])))
+
+(define eliminar-duplicados3
+  (lambda (chatbots)
+    (if (null? chatbots)
+      '()
+      (cons (id-chatbot chatbots)
+            (eliminar-duplicados3
+             (filter (lambda (element)
+                       (not (equal? element (id-chatbot chatbots))))
+                     (cdr chatbots)))))))
+
+(define eliminar-concurrencias3
+  (lambda (chatbots)
+    (map eliminar-duplicados3 chatbots)))
