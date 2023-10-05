@@ -47,10 +47,25 @@
   (lambda (system)
     (caddr system)))
 
-(define user-system
+(define chatbotHistory-system
   (lambda (system)
     (cadddr system)))
 
-(define user-login
+(define user-system
   (lambda (system)
     (cadddr (cdr system))))
+
+(define user-login
+  (lambda (system)
+    (cadddr (cddr system))))
+
+(define system-add-chatbot
+  (lambda (system chatbot)
+    (cons (name-system system) (cons (InitialChatbotCodeLink-system system)
+    (cons (add-chatbot (chatbots-system system) chatbot) (list null null null))))))
+
+(define system-add-user
+  (lambda (system user)
+    (cons (name-system system) (cons (InitialChatbotCodeLink-system system)
+    (cons (chatbots-system system) (cons (chatbotHistory-system system)
+    (cons (add-user (user-system system) user) (cons (user-login system) null))))))))

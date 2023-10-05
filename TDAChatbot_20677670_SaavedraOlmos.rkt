@@ -17,6 +17,12 @@
     (cons chatbotID (list name welcomeMessage startFlowID
                           (delete-flows (delete-repeat-flows flows))))))
 
+(define add-chatbot
+  (lambda (chatbots chatbot)
+    (if (member (id-chatbot chatbot) (map id-chatbot chatbots))
+        chatbots
+        (cons chatbots chatbot))))
+
 ; Nombre: id-chatbot
 ; Dominio: chatbot.
 ; Recorrido: chatbotID.
