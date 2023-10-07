@@ -15,8 +15,12 @@
   (lambda (id name . Options)
     (cons id (list name (delete-options (delete-repeat-options Options))))))
 
+(define add-flow
+  (lambda (flows flow)
+    (cons flow flows)))
+
 ; Nombre: id-flow.
-; Dominio: flow.
+; Dominio: flow (list).
 ; Recorrido: id (int).
 ; Descripción: Corresponde a una función selectora del TDA Flujo. En su entrada recibe
 ; un flujo. Su salida corresponde al id del flujo entrante.
@@ -26,7 +30,7 @@
     (car flow)))
 
 ; Nombre: name-flow.
-; Dominio: flow.
+; Dominio: flow (list).
 ; Recorrido: name (string).
 ; Descripción: Corresponde a una función selectora del TDA Flujo. En su entrada recibe
 ; un flujo. Su salida corresponde al nombre del flujo entrante.
@@ -36,7 +40,7 @@
     (cadr flow)))
 
 ; Nombre: options-flow.
-; Dominio: flow.
+; Dominio: flow (list).
 ; Recorrido: Options (list).
 ; Descripción: Corresponde a una función selectora del TDA Flujo. En su entrada recibe
 ; un flujo. Su salida corresponde a la lista de opciones del flujo entrante.
@@ -45,10 +49,9 @@
   (lambda (flow)
     (caddr flow)))
 
-
 ; Nombre: flow-add-option.
-; Dominio: flow X option.
-; Recorrido: flow.
+; Dominio: flow (list) X option (list).
+; Recorrido: flow (list).
 ; Descripción: Corresponde a una función modificadora del TDA Flujo. En su entrada recibe
 ; un flujo y una opción. Su salida corresponde a un flujo con la misma cantidad de opciones o
 ; una opción más (si no se repiten). Cabe destacar que las opciones añadidas no se pueden repetir

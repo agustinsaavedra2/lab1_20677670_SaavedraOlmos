@@ -13,7 +13,7 @@
 
 (define flow
   (lambda (id name . Options)
-    (cons id (list name Options))))
+    (cons id (list name (delete-options (delete-repeat-options Options))))))
 
 ; Nombre: id-flow.
 ; Dominio: flow.
@@ -45,6 +45,7 @@
   (lambda (flow)
     (caddr flow)))
 
+
 ; Nombre: flow-add-option.
 ; Dominio: flow X option.
 ; Recorrido: flow.
@@ -55,4 +56,19 @@
 
 (define flow-add-option
   (lambda (flow option)
-    (cons flow (list option))))
+    (cons (id-flow flow) (cons (name-flow flow)
+          (list (delete-flows (delete-repeat-flows (add-option (options-flow flow) option))))))))
+
+(define repeat-id-flow
+  (lambda (flows)
+    (filter (lambda (element) (not (equal? element (id-flow flows)))) (cdr flows))))
+
+(define delete-flows
+  (lambda (flows)
+    (if (null? flows)
+      '()
+      (cons (id-flow flows) (delete-flows (repeat-id-flow flows))))))
+
+(define delete-repeat-flows
+  (lambda (flows)
+    (map delete-flows flows)))
