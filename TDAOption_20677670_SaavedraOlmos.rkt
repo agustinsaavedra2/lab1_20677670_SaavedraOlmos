@@ -14,12 +14,6 @@
   (lambda (code message ChatbotCodeLink FlowCodeLink . Keywords)
     (cons code (list message ChatbotCodeLink FlowCodeLink Keywords))))
 
-(define add-option
-  (lambda (options option)
-    (if (is-option? option)
-        (cons option options)
-        options)))
-
 ; Nombre: code-option.
 ; Dominio: option (list).
 ; Recorrido: code (int).
@@ -61,6 +55,18 @@
     (if (and (not (null? option)) (list? option) (= 5 (length option)))
         #t
         #f)))
+
+; Nombre: add-option.
+; Dominio: list-options (list) X option (list).
+; Recorrido: list-options (list).
+; Descripción: Corresponde a una función modificadora del TDA Opción. Su entrada es una opción
+; y una lista de opciones, devuelve una lista de opciones modificada con una opcion agregada.
+
+(define add-option
+  (lambda (list-options option)
+    (if (is-option? option)
+        (cons option list-options)
+        list-options)))
 
 (define repeat-code
   (lambda (options)

@@ -15,10 +15,6 @@
   (lambda (id name . Options)
     (cons id (list name (delete-options (delete-repeat-options Options))))))
 
-(define add-flow
-  (lambda (flows flow)
-    (cons flow flows)))
-
 ; Nombre: id-flow.
 ; Dominio: flow (list).
 ; Recorrido: id (int).
@@ -48,6 +44,30 @@
 (define options-flow
   (lambda (flow)
     (caddr flow)))
+
+; Nombre: is-flow?.
+; Dominio: flow (list).
+; Recorrido: bool.
+; Descripción: Corresponde a una función de pertenencia del TDA Flujo. Su entrada es un flujo
+; y devuelve una función booleana (verdadero o falso).
+
+(define is-flow?
+  (lambda (flow)
+    (if (and (not (null? flow)) (= 3 (length flow)) (list? flow))
+        #t
+        #f)))
+
+; Nombre: add-flow.
+; Dominio: list-flows (list) X flows (list).
+; Recorrido: list-flows (list).
+; Descripción: Corresponde a una función modificadora del TDA Flujo. Su entrada es una flujo
+; y una lista de flujos, devuelve una lista de flujos modificada con un flujo agregado.
+
+(define add-flow
+  (lambda (list-flows flow)
+    (if (is-flow? flow)
+        (cons flow list-flows)
+        list-flows)))
 
 ; Nombre: flow-add-option.
 ; Dominio: flow (list) X option (list).

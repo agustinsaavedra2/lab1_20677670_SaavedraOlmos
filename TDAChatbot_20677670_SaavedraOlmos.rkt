@@ -17,12 +17,6 @@
     (cons chatbotID (list name welcomeMessage startFlowID
                           (delete-flows (delete-repeat-flows flows))))))
 
-(define add-chatbot
-  (lambda (chatbots chatbot)
-    (if (member (id-chatbot chatbot) (map id-chatbot chatbots))
-        chatbots
-        (cons chatbots chatbot))))
-
 ; Nombre: id-chatbot
 ; Dominio: chatbot (list).
 ; Recorrido: chatbotID (int).
@@ -72,6 +66,26 @@
 (define flows-chatbot
   (lambda (chatbot)
     (cddddr chatbot)))
+
+; Nombre: is-chatbot?.
+; Dominio: chatbot (list).
+; Recorrido: bool.
+; Descripción: Corresponde a una función de pertenencia del TDA Chatbot. Su entrada es un flujo
+; y devuelve una función booleana (verdadero o falso).
+
+(define is-chatbot?
+  (lambda (chatbot)
+    (if (and (not (null? chatbot)) (list? chatbot) (= 5 (length chatbot)))
+        #t
+        #f)))
+
+
+
+(define add-chatbot
+  (lambda (list-chatbots chatbot)
+    (if (and (not (member (id-chatbot chatbot) (map id-chatbot list-chatbots))) (is-chatbot? chatbot))
+        (cons list-chatbots chatbot)
+        list-chatbots)))
 
 ; Nombre: chatbot-add-flow.
 ; Dominio: chatbot (list) X flow (list).
