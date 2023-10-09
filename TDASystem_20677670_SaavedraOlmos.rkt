@@ -16,7 +16,7 @@
 (define system
   (lambda (name InitialChatbotCodeLink . chatbot)
     (cons name (list InitialChatbotCodeLink
-               (eliminar-duplicados3 (eliminar-concurrencias3 chatbot)) null null))))
+               (delete-chatbots (delete-repeat-chatbots chatbot)) null null null))))
 
 ; Nombre: name-system
 ; Dominio: system (list).
@@ -78,6 +78,12 @@
   (lambda (system)
     (cadddr (cddr system))))
 
+; Nombre: is-system?.
+; Dominio: system (string).
+; Recorrido: bool.
+; Descripción: Corresponde a una función de pertenencia del TDA Sistema. Su entrada es un sistema
+; y devuelve una función booleana (verdadero o falso).
+
 (define is-system?
   (lambda (system)
     (if (and (not (null? system)) (= 6 (length system)))
@@ -94,14 +100,18 @@
 
 (define system-add-chatbot
   (lambda (system chatbot)
-    (cons (name-system system) (cons (InitialChatbotCodeLink-system system)
-    (cons (add-chatbot (chatbots-system system) chatbot) (list null null null))))))
+    (if (and (is-system? system) (is-chatbot? chatbot))
+        (cons (name-system system) (cons (InitialChatbotCodeLink-system system)
+        (cons (add-chatbot (chatbots-system system) chatbot) (list null null null))))
+        system)))
 
 (define system-add-user
   (lambda (system user)
-    (cons (name-system system) (cons (InitialChatbotCodeLink-system system)
-    (cons (chatbots-system system) (cons (chatbotHistory-system system)
-    (cons (add-user (user-system system) user) (cons (user-login system) null))))))))
+    (if (and (is-system? system) (is-user? user))
+        (cons (name-system system) (cons (InitialChatbotCodeLink-system system)
+        (cons (chatbots-system system) (cons (chatbotHistory-system system)
+        (cons (add-user (user-system system) user) (cons (user-login system) null))))))
+        system)))
 
 (define system-login
   (lambda (system user)

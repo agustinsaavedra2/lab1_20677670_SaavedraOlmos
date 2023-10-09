@@ -79,7 +79,12 @@
         #t
         #f)))
 
-
+; Nombre: add-chatbot.
+; Dominio: list-chatbots (list) X chatbots (list).
+; Recorrido: list-chatbots (list).
+; Descripción: Corresponde a una función modificadora del TDA Chatbot. Su entrada es un chatbot
+; y una lista de chatbots, devuelve una lista de chatbots modificada con un flujo agregado dependiendo
+; si su id está repetido o no.
 
 (define add-chatbot
   (lambda (list-chatbots chatbot)
@@ -106,16 +111,38 @@
             (cons (startFlowID-chatbot chatbot) (cons (flows-chatbot chatbot)
                                                  (add-flow (cdr (flows-chatbot chatbot)) flow))))))])))
 
-(define eliminar-duplicados3
+; Nombre: repeat-id-chatbot.
+; Dominio: chatbots (list).
+; Recorrido: chatbots (list).
+; Descripción: Corresponde a una función de operación adicional del TDA Chatbot. Su entrada es una
+; lista de chatbots, devuelve una lista de chatbots modificada dependiendo si el id de un flujo
+; se repite o no en base al resto de los chatbots, usando la función de orden superior filter.
+
+(define repeat-id-chatbot
+  (lambda (chatbots)
+    (filter (lambda (element) (not (equal? element (id-chatbot chatbots)))) (cdr chatbots))))
+
+; Nombre: delete-chatbots.
+; Dominio: chatbots (list).
+; Recorrido: chatbots (list).
+; Descripción: Corresponde a una función de operación adicional del TDA Chatbot. Su entrada es una
+; lista de chatbots, devuelve una lista de chatbots modificada con eliminación de chatbots en base
+; a la repetición de su id. Se usa algoritmo de recursión natural para eliminar los flujos con el
+; id repetido. 
+
+(define delete-chatbots
   (lambda (chatbots)
     (if (null? chatbots)
       '()
-      (cons (id-chatbot chatbots)
-            (eliminar-duplicados3
-             (filter (lambda (element)
-                       (not (equal? element (id-chatbot chatbots))))
-                     (cdr chatbots)))))))
+      (cons (id-chatbot chatbots) (delete-chatbots (repeat-id-chatbot chatbots))))))
 
-(define eliminar-concurrencias3
+; Nombre: delete-repeat-chatbots.
+; Dominio: chatbots (list).
+; Recorrido: chatbots (list).
+; Descripción: Corresponde a una función de operación adicional del TDA Chatbot. Su entrada es una
+; lista de chatbots, devuelve una lista de chatbots con distinto id a través aplicando la función
+; delete-chatbots a todas los flujos usando la función map.
+
+(define delete-repeat-chatbots
   (lambda (chatbots)
-    (map eliminar-duplicados3 chatbots)))
+    (map delete-chatbots chatbots)))

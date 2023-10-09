@@ -68,15 +68,37 @@
         (cons option list-options)
         list-options)))
 
+; Nombre: repeat-code.
+; Dominio: options (list).
+; Recorrido: options (list).
+; Descripción: Corresponde a una función de operación adicional del TDA Opción. Su entrada es una
+; lista de opciones, devuelve una lista de opciones modificada dependiendo si el id de una opción
+; se repite o no en base al resto de las opciones, usando la función de orden superior filter.
+
 (define repeat-code
   (lambda (options)
     (filter (lambda (element) (not (equal? element (code-option options)))) (cdr options))))
+
+; Nombre: delete-options.
+; Dominio: options (list).
+; Recorrido: options (list).
+; Descripción: Corresponde a una función de operación adicional del TDA Opción. Su entrada es una
+; lista de opciones, devuelve una lista de opciones modificada con eliminación de opciones en base
+; a la repetición de su id. Se usa algoritmo de recursión natural para eliminar las opciones con el
+; id repetido. 
 
 (define delete-options
   (lambda (options)
     (if (null? options)
       '()
       (cons (code-option options) (delete-options (repeat-code options))))))
+
+; Nombre: delete-repeat-options.
+; Dominio: options (list).
+; Recorrido: options (list).
+; Descripción: Corresponde a una función de operación adicional del TDA Opción. Su entrada es una
+; lista de opciones, devuelve una lista de opciones con distinto id a través aplicando la función
+; delete-options a todas las opciones usando la función map.
 
 (define delete-repeat-options
   (lambda (options)

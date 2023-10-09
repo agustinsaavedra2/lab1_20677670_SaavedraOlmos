@@ -82,15 +82,37 @@
     (cons (id-flow flow) (cons (name-flow flow)
           (list (delete-flows (delete-repeat-flows (add-option (options-flow flow) option))))))))
 
+; Nombre: repeat-id-flow.
+; Dominio: flows (list).
+; Recorrido: flows (list).
+; Descripción: Corresponde a una función de operación adicional del TDA Flujo. Su entrada es una
+; lista de flujos, devuelve una lista de flujos modificada dependiendo si el id de un flujo
+; se repite o no en base al resto de los flujos, usando la función de orden superior filter.
+
 (define repeat-id-flow
   (lambda (flows)
     (filter (lambda (element) (not (equal? element (id-flow flows)))) (cdr flows))))
+
+; Nombre: delete-flows.
+; Dominio: flows (list).
+; Recorrido: flows (list).
+; Descripción: Corresponde a una función de operación adicional del TDA Flujo. Su entrada es una
+; lista de flujos, devuelve una lista de flujos modificada con eliminación de flujos en base
+; a la repetición de su id. Se usa algoritmo de recursión natural para eliminar los flujos con el
+; id repetido. 
 
 (define delete-flows
   (lambda (flows)
     (if (null? flows)
       '()
       (cons (id-flow flows) (delete-flows (repeat-id-flow flows))))))
+
+; Nombre: delete-repeat-flows.
+; Dominio: flows (list).
+; Recorrido: flows (list).
+; Descripción: Corresponde a una función de operación adicional del TDA Flujo. Su entrada es una
+; lista de flujos, devuelve una lista de flujos con distinto id a través aplicando la función
+; delete-flows a todas los flujos usando la función map.
 
 (define delete-repeat-flows
   (lambda (flows)
