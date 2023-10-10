@@ -1,0 +1,5 @@
+1) Los archivos de los TDA's  mas el script de prueba se deben colocar en una misma carpeta para evitar algún inconveniente
+con la ejecución del script de prueba.
+
+2) La función flow-add-option coloca en primer lugar la opción que se va a agregar y después las opciones
+que contiene el flujo correspondiente.
